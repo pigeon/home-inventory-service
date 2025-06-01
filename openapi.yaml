@@ -1,0 +1,272 @@
+openapi: 3.0.3
+info:
+  title: Home Inventory API
+  version: 1.0.0
+  description: A lightweight API for managing boxes and items in a home inventory.
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Box:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        number:
+          type: string
+          example: "BX-001"
+        description:
+          type: string
+          example: "Kitchen utensils"
+        created_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - number
+        - created_at
+    BoxCreate:
+      type: object
+      properties:
+        number:
+          type: string
+          example: "BX-002"
+        description:
+          type: string
+          example: "Office supplies"
+      required:
+        - number
+    BoxUpdate:
+      type: object
+      properties:
+        number:
+          type: string
+          example: "BX-002A"
+        description:
+          type: string
+          example: "Archived documents"
+    Item:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        box_id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Screwdriver"
+        note:
+          type: string
+          example: "Philips head"
+        photo_url:
+          type: string
+          format: uri
+          example: "/photos/10.jpg"
+        created_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - box_id
+        - name
+        - created_at
+    ItemCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Hammer"
+        note:
+          type: string
+          example: "16oz claw"
+        photo:
+          type: string
+          format: binary
+      required:
+        - name
+    ItemUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Hammer"
+        note:
+          type: string
+          example: "18oz"
+        photo:
+          type: string
+          format: binary
+    SearchResult:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+paths:
+  /boxes:
+    get:
+      summary: List all boxes
+      operationId: listBoxes
+      responses:
+        '200':
+          description: A list of boxes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Box'
+    post:
+      summary: Create a new box
+      operationId: createBox
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BoxCreate'
+      responses:
+        '201':
+          description: Box created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Box'
+  /boxes/{box_id}:
+    parameters:
+      - name: box_id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Retrieve a specific box with its items
+      operationId: getBox
+      responses:
+        '200':
+          description: Box details
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Box'
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Item'
+    put:
+      summary: Update a box
+      operationId: updateBox
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BoxUpdate'
+      responses:
+        '200':
+          description: Updated box
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Box'
+    delete:
+      summary: Delete a box and its items
+      operationId: deleteBox
+      responses:
+        '204':
+          description: Box deleted
+  /boxes/{box_id}/items:
+    parameters:
+      - name: box_id
+        in: path
+        required: true
+        schema:
+          type: integer
+    post:
+      summary: Add a new item to a box
+      operationId: createItem
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ItemCreate'
+      responses:
+        '201':
+          description: Item created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+  /items/{item_id}:
+    parameters:
+      - name: item_id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Retrieve an item by ID
+      operationId: getItem
+      responses:
+        '200':
+          description: Item details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    put:
+      summary: Update an item
+      operationId: updateItem
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ItemUpdate'
+      responses:
+        '200':
+          description: Updated item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    delete:
+      summary: Delete an item
+      operationId: deleteItem
+      responses:
+        '204':
+          description: Item deleted
+  /search:
+    get:
+      summary: Search items by text
+      operationId: searchItems
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "screwdriver"
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResult'
+security:
+  - bearerAuth: []
