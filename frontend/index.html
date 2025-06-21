@@ -6,31 +6,41 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Home Inventory</h1>
+  <div id="container">
+    <aside id="sidebar">
+      <h2>Boxes</h2>
+      <form id="box-form" enctype="multipart/form-data">
+        <input type="text" name="number" placeholder="Number" required>
+        <input type="text" name="description" placeholder="Description">
+        <input type="file" name="photo" accept="image/*">
+        <button type="submit">Add Box</button>
+      </form>
+      <div id="box-list"></div>
+    </aside>
 
-  <section id="create-box">
-    <h2>Create Box</h2>
-    <form id="box-form" enctype="multipart/form-data">
-      <input type="text" name="number" placeholder="Number" required>
-      <input type="text" name="description" placeholder="Description">
-      <input type="file" name="photo" accept="image/*">
-      <button type="submit">Create Box</button>
-    </form>
-  </section>
+    <main id="main">
+      <h1>Home Inventory</h1>
+      <section id="box-detail" class="hidden">
+        <h2 id="box-title"></h2>
+        <div id="item-list"></div>
+        <form id="item-form" enctype="multipart/form-data" class="hidden">
+          <input type="text" name="name" placeholder="Item name" required>
+          <input type="text" name="note" placeholder="Note">
+          <input type="file" name="photo" accept="image/*">
+          <button type="submit">Add Item</button>
+        </form>
+      </section>
 
-  <section id="boxes">
-    <h2>Boxes</h2>
-    <div id="box-list"></div>
-  </section>
-
-  <section id="search">
-    <h2>Search Items</h2>
-    <form id="search-form">
-      <input type="text" name="query" placeholder="Search" required>
-      <button type="submit">Search</button>
-    </form>
-    <ul id="search-results"></ul>
-  </section>
+      <section id="search">
+        <h2>Search Items</h2>
+        <form id="search-form">
+          <input type="text" name="query" placeholder="Search" required>
+          <button type="submit">Search</button>
+        </form>
+        <ul id="search-results"></ul>
+      </section>
+    </main>
+  </div>
 
   <script src="script.js"></script>
 </body>
