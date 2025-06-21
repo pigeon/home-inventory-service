@@ -25,8 +25,8 @@ body {
 
 #box-list {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1em;
+  flex-direction: column;
+  gap: 0.5em;
 }
 
 section {
