@@ -104,9 +104,10 @@ The OpenAPI spec is available in:
 
 ```bash
 curl -X POST http://localhost:8000/boxes \
-  -H "Content-Type: application/json" \
-  -d '{"number": "BX-001", "description": "Office"}'
+  -F "number=BX-001" \
+  -F "description=Office"
 ```
+_Optionally include_ `-F "photo=@./path/to/box.jpg"` _to upload an image._
 
 **Add Item with Photo**
 
