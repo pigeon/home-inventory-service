@@ -9,6 +9,7 @@ A lightweight FastAPI-based backend for managing boxes and items in a home inven
 * Retrieve all items within a box
 * Simple search by item name or note
 * OpenAPI documentation (via `/docs`)
+* Quick service health check via `/health`
 
 ---
 

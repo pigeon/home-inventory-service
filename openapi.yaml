@@ -108,6 +108,21 @@ components:
           items:
             $ref: '#/components/schemas/Item'
 paths:
+  /health:
+    get:
+      summary: Health check
+      operationId: health
+      responses:
+        '200':
+          description: Service status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
   /boxes:
     get:
       summary: List all boxes
