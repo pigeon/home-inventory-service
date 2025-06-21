@@ -19,6 +19,16 @@ body {
   flex: 1;
 }
 
+#boxes {
+  margin-top: 1em;
+}
+
+#box-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
 section {
   margin-bottom: 2em;
   padding: 1em;
@@ -48,16 +58,15 @@ button:hover {
   background-color: #0056b3;
 }
 
-.box {
-  margin-bottom: 1em;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 1em;
-}
 
 #box-list .box-entry {
   display: flex;
   align-items: center;
-  margin-bottom: 0.5em;
+  gap: 0.5em;
+  padding: 0.5em;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  background: #fafafa;
   cursor: pointer;
 }
 

@@ -8,18 +8,21 @@
 <body>
   <div id="container">
     <aside id="sidebar">
-      <h2>Boxes</h2>
+      <h2>Add Box</h2>
       <form id="box-form" enctype="multipart/form-data">
         <input type="text" name="number" placeholder="Number" required>
         <input type="text" name="description" placeholder="Description">
         <input type="file" name="photo" accept="image/*">
         <button type="submit">Add Box</button>
       </form>
-      <div id="box-list"></div>
     </aside>
 
     <main id="main">
       <h1>Home Inventory</h1>
+      <section id="boxes">
+        <h2>Boxes</h2>
+        <div id="box-list"></div>
+      </section>
       <section id="box-detail" class="hidden">
         <h2 id="box-title"></h2>
         <div id="item-list"></div>
