@@ -68,15 +68,16 @@ The app will be available at [http://localhost:8000](http://localhost:8000)
 
 ```
 .
-├── main.py             # FastAPI entrypoint
-├── models.py           # SQLModel database models
-├── schemas.py          # Pydantic schemas for request/response
-├── crud.py             # Business logic and DB interaction
-├── database.py         # Session setup
-├── Dockerfile          # Container build instructions
-├── docker-compose.yml  # Local deployment config
-├── requirements.txt    # Python dependencies
-└── openapi.yaml        # OpenAPI 3 spec
+├── app/
+│   ├── main.py
+│   ├── models.py
+│   ├── schemas.py
+│   ├── crud.py
+│   └── database.py
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+└── openapi.yaml
 ```
 
 ---
