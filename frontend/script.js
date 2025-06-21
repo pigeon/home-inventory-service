@@ -21,7 +21,12 @@ function renderBoxes(boxes) {
     div.className = 'box-entry';
     div.dataset.id = box.id;
     const img = box.photo_filename ? `<img class="thumb" src="/photos/${box.photo_filename}"/>` : '';
-    div.innerHTML = `${img}<span>Box ${box.number}</span> <button data-id="${box.id}" class="delete-box">Delete</button>`;
+    div.innerHTML = `
+      <div class="box-header">
+        <span class="box-name">Box ${box.number}</span>
+        <a href="#" data-id="${box.id}" class="delete-box">Delete</a>
+      </div>
+      ${img}`;
     boxList.appendChild(div);
   });
 }
@@ -35,10 +40,9 @@ boxForm.addEventListener('submit', async e => {
 });
 
 boxList.addEventListener('click', async e => {
-  const id = e.target.dataset.id || e.target.closest('.box-entry')?.dataset.id;
-  if (!id) return;
-
   if (e.target.classList.contains('delete-box')) {
+    e.preventDefault();
+    const id = e.target.dataset.id;
     await fetch(`/boxes/${id}`, { method: 'DELETE' });
     if (String(currentBoxId) === id) {
       currentBoxId = null;
@@ -49,6 +53,9 @@ boxList.addEventListener('click', async e => {
     fetchBoxes();
     return;
   }
+
+  const id = e.target.closest('.box-entry')?.dataset.id;
+  if (!id) return;
 
   const res = await fetch(`/boxes/${id}`);
   const box = await res.json();
@@ -64,21 +71,31 @@ function renderItems(items) {
   itemList.innerHTML = '';
   items.forEach(item => {
     const div = document.createElement('div');
+    div.className = 'item-entry';
     const img = item.photo_url ? `<img class="preview" src="${item.photo_url}"/>` : '';
-    div.innerHTML = `${img}<strong>${item.name}</strong> ${item.note || ''}
-      <button data-id="${item.id}" class="edit-item">Edit</button>
-      <button data-id="${item.id}" class="delete-item">Delete</button>`;
+    div.innerHTML = `
+      <div class="item-header">
+        <span class="item-name">${item.name}</span>
+        <a href="#" data-id="${item.id}" class="delete-item">Delete</a>
+        <button data-id="${item.id}" class="edit-item">Edit</button>
+      </div>
+      ${img}
+      <div class="item-note">${item.note || ''}</div>`;
     itemList.appendChild(div);
   });
 }
 
 itemList.addEventListener('click', async e => {
-  const itemId = e.target.dataset.id;
-  if (!itemId) return;
   if (e.target.classList.contains('delete-item')) {
+    e.preventDefault();
+    const itemId = e.target.dataset.id;
     await fetch(`/items/${itemId}`, { method: 'DELETE' });
     loadCurrentBox();
+    return;
   }
+
+  const itemId = e.target.dataset.id;
+  if (!itemId) return;
   if (e.target.classList.contains('edit-item')) {
     const name = prompt('Item name:');
     const note = prompt('Note:');
