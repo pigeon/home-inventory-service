@@ -57,8 +57,9 @@ class ItemUpdate(BaseModel):
 class Item(ItemBase):
     id: int
     box_id: int
-    pphoto_url: Optional[str] = None
-    photo_filename: Optional[str] = None    
+    photo_url: Optional[str] = None
+    photo_filename: Optional[str] = None
     created_at: datetime
     class Config:
         from_attributes = True
+
