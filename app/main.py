@@ -13,6 +13,12 @@ app.mount("/photos", StaticFiles(directory="./data/photos"), name="photos")
 
 database.init_db()
 
+
+@app.get("/health")
+def health() -> dict[str, str]:
+    """Simple health check endpoint."""
+    return {"status": "ok"}
+
 @app.get("/boxes", response_model=list[schemas.Box])
 def list_boxes(session: Session = Depends(database.get_session)):
     return crud.get_boxes(session)

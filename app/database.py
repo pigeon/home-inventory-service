@@ -1,8 +1,9 @@
 from sqlmodel import SQLModel, create_engine, Session
-from typing import Optional
 from sqlalchemy import event
+import os
 
 DATABASE_URL = "sqlite:///./data/inventory.db"
+os.makedirs("./data", exist_ok=True)
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 
 # enable FTS5 on startup

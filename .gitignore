@@ -1,0 +1,12 @@
+# Python artifacts
+__pycache__/
+*.pyc
+
+# local data
+/data/
+
+# test cache
+.pytest_cache/
+
+# environment files
+venv/
