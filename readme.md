@@ -10,6 +10,7 @@ A lightweight FastAPI-based backend for managing boxes and items in a home inven
 * Simple search by item name or note
 * OpenAPI documentation (via `/docs`)
 * Quick service health check via `/health`
+* Simple web UI available at `/web`
 
 ---
 
@@ -50,6 +51,7 @@ uvicorn main:app --reload
 
 Access the app at: [http://localhost:8000](http://localhost:8000)
 API Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
+Web UI: [http://localhost:8000/web](http://localhost:8000/web)
 
 ---
 
@@ -63,6 +65,7 @@ docker-compose up --build
 
 This will start the FastAPI backend only.
 The app will be available at [http://localhost:8000](http://localhost:8000)
+Web UI: [http://localhost:8000/web](http://localhost:8000/web)
 
 ---
 
@@ -90,6 +93,7 @@ The OpenAPI spec is available in:
 
 * Swagger UI: `/docs`
 * Raw YAML: [`openapi.yaml`](./openapi.yaml)
+* Simple Web UI: `/web`
 
 ---
 
