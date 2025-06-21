@@ -3,6 +3,10 @@ from typing import Optional
 from fastapi.staticfiles import StaticFiles
 from sqlmodel import Session
 from app import crud, schemas, database
+from .database import get_session as get_db
+
+
+
 
 app = FastAPI()
 app.mount("/photos", StaticFiles(directory="./data/photos"), name="photos")
@@ -13,9 +17,42 @@ database.init_db()
 def list_boxes(session: Session = Depends(database.get_session)):
     return crud.get_boxes(session)
 
-@app.post("/boxes", response_model=schemas.Box, status_code=201)
-def create_box(box: schemas.BoxCreate, session: Session = Depends(database.get_session)):
-    return crud.create_box(session, box)
+# @app.post("/boxes", response_model=schemas.Box)
+# async def create_box(
+#     number: str = Form(...),
+#     description: Optional[str] = Form(None),
+#     photo: Optional[UploadFile] = File(None),
+#     db: Session = Depends(get_db)
+# ):
+#     photo_filename = None
+#     photo_url = None
+
+#     if photo:
+#         photo_filename = f"{uuid4()}.jpg"
+#         photo_path = os.path.join("data/photos", photo_filename)
+#         with open(photo_path, "wb") as f:
+#             f.write(await photo.read())
+#         photo_url = f"/photos/{photo_filename}"
+
+#     box = models.Box(
+#         number=number,
+#         description=description,
+#         photo_filename=photo_filename,
+#         photo_url=photo_url,
+#     )
+#     db.add(box)
+#     db.commit()
+#     db.refresh(box)
+#     return box
+
+@app.post("/boxes", response_model=schemas.Box)
+def create_box(
+    number: str = Form(...),
+    description: Optional[str] = Form(None),
+    photo: UploadFile = File(None), 
+    session: Session = Depends(database.get_session)):
+    return crud.create_box(session, number, description, photo)
+
 
 @app.get("/boxes/{box_id}", response_model=schemas.BoxWithItems)
 def get_box(box_id: int, session: Session = Depends(database.get_session)):

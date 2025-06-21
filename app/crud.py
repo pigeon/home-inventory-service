@@ -17,8 +17,14 @@ def get_box(session: Session, box_id: int):
         raise HTTPException(404, "Box not found")
     return box
 
-def create_box(session: Session, box: schemas.BoxCreate):
-    db_box = models.Box.from_orm(box)
+def create_box(session: Session, number: str, description: str, photo: UploadFile = None):
+    filename = None
+    if photo:
+        ext = os.path.splitext(photo.filename)[1]
+        filename = f"{uuid.uuid4()}{ext}"
+        with open(os.path.join(PHOTOS_DIR, filename), "wb") as f:
+            shutil.copyfileobj(photo.file, f)
+    db_box = models.Box(number= number, description=description, photo_filename=filename)
     session.add(db_box)
     session.commit()
     session.refresh(db_box)
@@ -31,7 +37,7 @@ def update_box(session: Session, box_id: int, box_up: schemas.BoxUpdate):
     session.commit()
     return box
 
-def delete_box(session: Session, box_id: int):
+def delete_box(session: Session, box_id: int):    
     box = get_box(session, box_id)
     session.delete(box)
     session.commit()

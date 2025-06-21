@@ -132,9 +132,21 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              $ref: '#/components/schemas/BoxCreate'
+              type: object
+              properties:
+                number:
+                  type: string
+                  example: "BX-002"
+                description:
+                  type: string
+                  example: "Office supplies"
+                photo:
+                  type: string
+                  format: binary
+              required:
+                - number
       responses:
         '201':
           description: Box created

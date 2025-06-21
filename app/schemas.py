@@ -8,30 +8,38 @@ class Item(BaseModel):
     name: str
     note: Optional[str]
     photo_url: Optional[str] = None
+    photo_filename: Optional[str] = None    
     created_at: datetime
 
     class Config:
         from_attributes = True
+# Base schema
 class BoxBase(BaseModel):
     number: str
     description: Optional[str]
 
+# For box creation
 class BoxCreate(BoxBase):
     pass
 
+# For box updates
 class BoxUpdate(BaseModel):
     number: Optional[str]
     description: Optional[str]
 
+# Full box schema (response)
 class Box(BoxBase):
     id: int
     created_at: datetime
+    photo_url: Optional[str] = None
+    photo_filename: Optional[str] = None
 
     class Config:
         from_attributes = True
 
+# Box with nested items
 class BoxWithItems(Box):
-    items: List[Item] = []    # ← add this!
+    items: List[Item] = []
 
     class Config:
         from_attributes = True
@@ -49,7 +57,8 @@ class ItemUpdate(BaseModel):
 class Item(ItemBase):
     id: int
     box_id: int
-    pphoto_url: Optional[str] = None 
+    pphoto_url: Optional[str] = None
+    photo_filename: Optional[str] = None    
     created_at: datetime
     class Config:
         from_attributes = True
