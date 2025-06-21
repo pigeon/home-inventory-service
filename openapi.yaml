@@ -7,11 +7,6 @@ servers:
   - url: http://localhost:8000
     description: Local development server
 components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
   schemas:
     Box:
       type: object
@@ -280,5 +275,3 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SearchResult'
-security:
-  - bearerAuth: []
