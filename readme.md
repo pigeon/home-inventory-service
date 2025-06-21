@@ -60,6 +60,7 @@ API Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 docker-compose up --build
 ```
 
+This will start the FastAPI backend only.
 The app will be available at [http://localhost:8000](http://localhost:8000)
 
 ---
