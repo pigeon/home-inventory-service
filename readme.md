@@ -7,7 +7,7 @@ A lightweight FastAPI-based backend for managing boxes and items in a home inven
 * Create and manage **boxes** and **items**
 * Upload item photos via `multipart/form-data`
 * Retrieve all items within a box
-* Full-text **search** support for item names
+* Simple search by item name or note
 * OpenAPI documentation (via `/docs`)
 
 ---
