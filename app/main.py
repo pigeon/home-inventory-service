@@ -10,6 +10,7 @@ from .database import get_session as get_db
 
 app = FastAPI()
 app.mount("/photos", StaticFiles(directory="./data/photos"), name="photos")
+app.mount("/web", StaticFiles(directory="./frontend", html=True), name="frontend")
 
 database.init_db()
 
