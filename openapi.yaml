@@ -20,6 +20,14 @@ components:
         description:
           type: string
           example: "Kitchen utensils"
+        photo_url:
+          type: string
+          nullable: true
+          example: null
+        photo_filename:
+          type: string
+          nullable: true
+          example: "3f6d8d5d-55c5-4310-bef2-1ad6c1aaf3c2.jpg"
         created_at:
           type: string
           format: date-time
@@ -64,8 +72,12 @@ components:
           example: "Philips head"
         photo_url:
           type: string
-          format: uri
+          nullable: true
           example: "/photos/10.jpg"
+        photo_filename:
+          type: string
+          nullable: true
+          example: "10.jpg"
         created_at:
           type: string
           format: date-time
@@ -101,12 +113,9 @@ components:
           type: string
           format: binary
     SearchResult:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Item'
+      type: array
+      items:
+        $ref: '#/components/schemas/Item'
 paths:
   /health:
     get:
@@ -158,7 +167,7 @@ paths:
               required:
                 - number
       responses:
-        '201':
+        '200':
           description: Box created
           content:
             application/json:
@@ -180,6 +189,7 @@ paths:
           content:
             application/json:
               schema:
+                type: object
                 allOf:
                   - $ref: '#/components/schemas/Box'
                   - type: object
